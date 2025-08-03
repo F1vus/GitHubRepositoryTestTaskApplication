@@ -42,6 +42,6 @@ public final class TestDataUtil {
     }
 
     public static ErrorResponse createTestErrorResponse() {
-        return new ErrorResponse(404, "GitHub user ' ' not found");
+        return new ErrorResponse(404, "GitHub user 'ExampleUserNotFound' not found");
     }
 }

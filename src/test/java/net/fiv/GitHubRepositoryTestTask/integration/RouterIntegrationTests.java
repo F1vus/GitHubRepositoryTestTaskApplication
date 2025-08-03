@@ -68,6 +68,14 @@ public class RouterIntegrationTests {
         wireMockServer.stubFor(WireMock.get("/repos/testuser/repo1/branches")
                 .willReturn(okJson(branchesJson)));
 
+
+        ErrorResponse errorResponseNotFound = TestDataUtil.createTestErrorResponse();
+
+        String errorResponseNotFoundJson = OBJECT_MAPPER.writeValueAsString(errorResponseNotFound);
+
+        wireMockServer.stubFor(WireMock.get("/users/ExampleUserNotFound/repos")
+                .willReturn(okJson(errorResponseNotFoundJson).withStatus(404)));
+
     }
     @AfterAll
     static void teardownWireMock() {
@@ -93,14 +101,13 @@ public class RouterIntegrationTests {
         List<RepositoryDto> expected = List.of(
                 TestDataUtil.createTestRepositoryDto()
         );
-        System.out.println(expected);
-        System.out.println(actual);
+
         assertEquals(expected, actual);
     }
 
     @Test
     void thenStatus404() throws JsonProcessingException {
-        String responseJson = webClient.get().uri("/api/repos/ ")
+        String responseJson = webClient.get().uri("/api/repos/ExampleUserNotFound")
                 .exchange()
                 .expectStatus().isNotFound()
                 .expectBody(String.class)

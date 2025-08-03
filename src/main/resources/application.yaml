@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: GitHubRepositoryTestTask
+logging:
+  level:
+    root: INFO
+    net.fiv.testgithubapi: DEBUG
+  file:
+    name: logs/app.log
+rest-client:
+  base-url: https://api.github.com
